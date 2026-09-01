@@ -1,7 +1,9 @@
-# Voice Lights / Голосовое управление светом
+# Voice Lights in 2026🚀 / Голосовое управление светом в 2026🚀
 
 Please read till the end.
 Пожалуйста прочитайте до конца.
+Tested on real ESP32-S3 N16R8 hardware — September 2026.
+Протестировано на реальном ESP32-S3 N16R8 — Сентябрь 2026.
                                - 01.09.2026 (DD.MM.YYYY).
 
 [Русский](#русский) · [English](#english)

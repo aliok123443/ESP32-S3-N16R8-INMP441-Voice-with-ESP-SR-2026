@@ -10,7 +10,7 @@ Offline voice-controlled relay firmware for **YD-ESP32-23 (ESP32-S3 N16R8)**. It
 
 ### Возможности
 
-- Офлайн-распознавание английской команды `lights` через ESP-SR MultiNet5.
+- Офлайн-распознавание английской команды `lights` через ESP-SR MultiNet7.
 - Для срабатывания команда должна быть распознана дважды в течение 2 секунд — защита от случайного включения.
 - Реле по умолчанию подключается к GPIO21; уровень по умолчанию active-high.
 - Веб-панель: текущий IP устройства или `http://voice-lights.local`.
@@ -59,7 +59,7 @@ Offline voice-controlled relay firmware for **YD-ESP32-23 (ESP32-S3 N16R8)**. It
 
 ### Features
 
-- Offline recognition of the English `lights` command using ESP-SR MultiNet5.
+- Offline recognition of the English `lights` command using ESP-SR MultiNet7.
 - A command must be recognized twice within two seconds, reducing accidental switching.
 - Relay output defaults to GPIO21 and active-high logic.
 - Web dashboard at the device IP address or `http://voice-lights.local`.

@@ -8,7 +8,7 @@ Tested on real ESP32-S3 N16R8 hardware — September 2026.
 
 [Русский](#русский) · [English](#english)
 
-Offline voice-controlled relay firmware for **YD-ESP32-23 (ESP32-S3 N16R8)**. It uses an INMP441 I2S microphone, ESP-SR MultiNet5 command recognition, and a small web dashboard. No cloud service is required after flashing.
+Offline voice-controlled relay firmware for **YD-ESP32-23 (ESP32-S3 N16R8)**. It uses an INMP441 I2S microphone, ESP-SR MultiNet7 command recognition, and a small web dashboard. No cloud service is required after flashing.
 
 > Status: this version continuously listens for the `lights` command and toggles a relay on GPIO21. Wake-word recognition and direct WS2812 control are not enabled in the current firmware.
 
@@ -42,7 +42,7 @@ Offline voice-controlled relay firmware for **YD-ESP32-23 (ESP32-S3 N16R8)**. It
 2. Склонируйте репозиторий и настройте личные параметры:
 
    ```powershell
-   git clone https://github.com/YOUR-USERNAME/voice-lights.git
+   git clone https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR-2026.git
    cd voice-lights
    # Отредактируйте main/app_config.h: Wi-Fi и пароль точки доступа.
    idf.py set-target esp32s3
@@ -94,7 +94,7 @@ Never connect mains power directly to an ESP32. Use a suitably rated isolated re
 2. Clone the repository, configure it, then build:
 
    ```powershell
-   git clone https://github.com/YOUR-USERNAME/voice-lights.git
+   git clone https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR-2026.git
    cd voice-lights
    # Edit main/app_config.h with your Wi-Fi settings and AP password.
    idf.py set-target esp32s3

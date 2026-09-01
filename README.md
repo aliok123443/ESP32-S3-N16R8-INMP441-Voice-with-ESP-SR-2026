@@ -1,5 +1,9 @@
 # Voice Lights / Голосовое управление светом
 
+Please read till the end.
+Пожалуйста прочитайте до конца.
+                               - 01.09.2026 (DD.MM.YYYY).
+
 [Русский](#русский) · [English](#english)
 
 Offline voice-controlled relay firmware for **YD-ESP32-23 (ESP32-S3 N16R8)**. It uses an INMP441 I2S microphone, ESP-SR MultiNet5 command recognition, and a small web dashboard. No cloud service is required after flashing.
@@ -54,6 +58,9 @@ Offline voice-controlled relay firmware for **YD-ESP32-23 (ESP32-S3 N16R8)**. It
 - `APP_MDNS_HOSTNAME` — желаемое локальное имя.
 
 Не публикуйте этот файл с реальными паролями. Перед коммитом верните плейсхолдеры или храните личную конфигурацию вне репозитория.
+
+Кстати, это проект от 24.07.2026 (DD.MM.YYYY) , и он всё ещё работает (у меня — лол).
+⚠️⚠️ ЕСЛИ У ВАС ОН НЕ РАБОТАЕТ, ПОЖАЛУЙСТА, СКАЧАЙТЕ **ESP-IDF v5.3.4**; я потратил несколько дней на тесты, и с **ESP-IDF v6.x.x** проект НЕ работает. А если вы уже используете **ESP-IDF v5.3.4**, пожалуйста, сообщите о проблеме здесь: [https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR/issues](https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR/issues) ⚠️⚠️
 
 ## English
 
@@ -115,3 +122,7 @@ Issues and pull requests are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING
 ## License and third-party software
 
 This repository’s original source is licensed under [MIT](LICENSE). ESP-IDF, ESP-SR, and Component Manager dependencies remain subject to their own licenses; they are downloaded separately during the build.
+
+By the way this is project from 24.07.2026 (DD.MM.YYYY) and it still works (for me lol). 
+
+⚠️⚠️ IF IT'S NOT WORKING PLEASE DOWNLOAD **ESP-IDF v5.3.4** I TESTED FOR DAYS AND **ESP-IDF v6.x.x** DOESN'T WORK. AND IF YOU ALREADY ON **ESP-IDF v5.3.4** PLEASE REPORT AN ISSUE [https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR/issues] (https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR/issues) ⚠️⚠️

@@ -61,7 +61,7 @@ Offline voice-controlled relay firmware for **YD-ESP32-23 (ESP32-S3 N16R8)**. It
 
 Не публикуйте этот файл с реальными паролями. Перед коммитом верните плейсхолдеры или храните личную конфигурацию вне репозитория.
 
-Кстати, это проект от 24.07.2026 (DD.MM.YYYY) , и он всё ещё работает (у меня — лол).
+Этот проект от 24.07.2026 (DD.MM.YYYY) , и он всё ещё работает.
 ⚠️ ЕСЛИ У ВАС ОН НЕ РАБОТАЕТ, ПОЖАЛУЙСТА, СКАЧАЙТЕ **ESP-IDF v5.3.4** тесты проведены, и с **ESP-IDF v6.x.x** проект НЕ работает. А если вы уже используете **ESP-IDF v5.3.4**, пожалуйста, сообщите о проблеме здесь: [https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR/issues](https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR/issues) ⚠️
 
 ## English
@@ -125,6 +125,6 @@ Issues and pull requests are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING
 
 This repository’s original source is licensed under [MIT](LICENSE). ESP-IDF, ESP-SR, and Component Manager dependencies remain subject to their own licenses; they are downloaded separately during the build.
 
-By the way this is project from 24.07.2026 (DD.MM.YYYY) and it still works (for me lol). 
+This project from 24.07.2026 (DD.MM.YYYY) and it still works.
 
 ⚠️ IF IT'S NOT WORKING PLEASE DOWNLOAD **ESP-IDF v5.3.4** TESTS SHOWED THAT WITH **ESP-IDF v6.x.x** IT DOESN'T WORK. AND IF YOU ALREADY ON **ESP-IDF v5.3.4** PLEASE REPORT AN ISSUE [https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR/issues] (https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR/issues) ⚠️

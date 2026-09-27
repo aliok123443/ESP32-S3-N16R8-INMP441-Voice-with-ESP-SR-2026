@@ -27,31 +27,38 @@
     .brand { display:flex; align-items:center; gap:11px; font-weight:800; letter-spacing:-.03em; }
     .brand-mark { width:34px; height:34px; display:grid; place-items:center; border:1px solid rgba(195,216,178,.45); border-radius:10px; color:var(--cyan); background:rgba(195,216,178,.08); font-family:'Roboto Mono',monospace; }
     .nav-links { display:flex; align-items:center; gap:22px; color:var(--muted); font-size:.82rem; font-weight:600; } .nav-links a:hover { color:var(--text); }
-    .hero { display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:70px; min-height:580px; padding:72px 0 92px; }
-    .eyebrow { display:inline-flex; align-items:center; gap:8px; padding:6px 11px; border:1px solid var(--line); border-radius:999px; color:var(--cyan); background:rgba(104,227,255,.07); font:500 .72rem 'Roboto Mono',monospace; letter-spacing:.06em; }
+    .hero { position:relative; display:grid; place-items:center; min-height:680px; padding:82px 0 110px; text-align:center; isolation:isolate; }
+    .hero:before { content:""; position:absolute; z-index:-2; width:min(78vw,780px); height:min(62vw,560px); border-radius:50%; background:rgba(195,216,178,.12); filter:blur(95px); }
+    .hero-copy { position:relative; z-index:2; max-width:760px; }
+    .hero-model { position:absolute; z-index:-1; inset:0; display:grid; place-items:center; pointer-events:none; }
+    #model-canvas { width:100%; height:100%; display:block; opacity:.94; }
+    .model-note { position:absolute; right:2%; bottom:20%; color:var(--muted); font:500 .66rem 'Roboto Mono',monospace; letter-spacing:.08em; transform:rotate(-90deg); transform-origin:right bottom; }
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; padding:6px 11px; border:1px solid var(--line); border-radius:999px; color:var(--cyan); background:rgba(195,216,178,.07); font:500 .72rem 'Roboto Mono',monospace; letter-spacing:.06em; }
     .pulse { width:7px; height:7px; border-radius:50%; background:var(--lime); box-shadow:0 0 0 5px rgba(154,245,180,.12); }
     h1,h2,h3,p { margin-top:0; } h1 { max-width:720px; margin:18px 0; font-size:clamp(2.55rem,6vw,5.3rem); line-height:1.02; letter-spacing:-.07em; } h1 span { color:var(--cyan); }
-    .lead { max-width:630px; margin:0 0 28px; color:var(--muted); font-size:1.02rem; } .actions { display:flex; flex-wrap:wrap; gap:12px; }
+    .lead { max-width:630px; margin:0 auto 28px; color:var(--muted); font-size:1.02rem; } .actions { display:flex; justify-content:center; flex-wrap:wrap; gap:12px; }
     .button { display:inline-flex; align-items:center; justify-content:center; gap:9px; min-height:46px; padding:0 18px; border:1px solid transparent; border-radius:12px; font-size:.85rem; font-weight:700; transition:.2s transform,.2s background; } .button:hover { transform:translateY(-2px); }
-    .button.primary { color:#061019; background:linear-gradient(135deg,var(--cyan),#93eaff); } .button.secondary { border-color:var(--line); background:rgba(255,255,255,.03); }
+    .button.primary { color:#151712; background:var(--cyan); } .button.secondary { border-color:var(--line); background:rgba(255,255,255,.03); }
     .hero-card { position:relative; padding:25px; overflow:hidden; border:1px solid var(--line); border-radius:24px; background:linear-gradient(145deg,#242a23,#161815); box-shadow:var(--shadow); }
     .hero-card:after { content:""; position:absolute; width:220px; height:220px; right:-120px; bottom:-120px; border-radius:50%; background:var(--violet); filter:blur(64px); opacity:.16; }
     .card-top,.status-row,.command { display:flex; align-items:center; justify-content:space-between; gap:12px; } .card-label { color:var(--muted); font:500 .72rem 'Roboto Mono',monospace; text-transform:uppercase; letter-spacing:.08em; } .online { color:var(--lime); font:500 .72rem 'Roboto Mono',monospace; }
-    .device-scene { height:175px; position:relative; display:grid; place-items:center; perspective:700px; }
-    .board-3d { position:relative; width:235px; height:126px; border:1px solid rgba(195,216,178,.65); border-radius:13px; background:linear-gradient(135deg,#485743,#20281e 62%); transform:rotateX(57deg) rotateZ(-14deg); box-shadow:16px 23px 0 #0b0c0a, 25px 33px 24px rgba(0,0,0,.42); }
-    .board-3d:before,.board-3d:after { content:""; position:absolute; border:1px solid rgba(195,216,178,.34); border-radius:50%; }
-    .board-3d:before { width:18px; height:18px; top:12px; left:13px; box-shadow:195px 0 0 -1px #485743,195px 85px 0 -1px #485743,0 85px 0 -1px #485743; }
-    .board-3d:after { width:95px; height:43px; top:37px; left:72px; border-radius:7px; background:linear-gradient(135deg,#242822,#11140f); box-shadow:inset 0 0 0 4px #69775e; }
-    .mic-3d { position:absolute; right:29px; top:23px; width:31px; height:31px; border-radius:50%; border:2px solid #dad8c2; background:repeating-linear-gradient(90deg,#aaa994 0 2px,#44483d 2px 4px); transform:translateZ(60px); box-shadow:0 8px 13px #0008; }
-    .mic-3d:after { content:""; position:absolute; width:8px; height:45px; left:9px; top:28px; border-radius:4px; background:#777d6b; transform:rotate(-25deg); transform-origin:top; }
+    .menu-toggle { position:fixed; z-index:60; top:22px; left:22px; width:42px; height:42px; display:grid; place-content:center; gap:5px; border:1px solid var(--line); border-radius:12px; color:var(--text); background:rgba(16,17,15,.78); box-shadow:0 10px 30px rgba(0,0,0,.18); backdrop-filter:blur(14px); }
+    .menu-toggle span { display:block; width:17px; height:1.5px; border-radius:4px; background:currentColor; transition:.2s; } .menu-toggle.open span:first-child { transform:translateY(6.5px) rotate(45deg); } .menu-toggle.open span:nth-child(2) { opacity:0; } .menu-toggle.open span:last-child { transform:translateY(-6.5px) rotate(-45deg); }
+    .side-menu { position:fixed; z-index:55; top:0; bottom:0; left:0; width:min(320px,86vw); padding:96px 28px 28px; border-right:1px solid var(--line); background:rgba(21,24,20,.96); box-shadow:20px 0 70px rgba(0,0,0,.3); transform:translateX(-105%); transition:transform .28s ease; }
+    .side-menu.open { transform:none; } .side-menu p { color:var(--muted); font-size:.72rem; } .side-menu nav { display:grid; gap:5px; margin-top:26px; } .side-menu nav a { padding:12px 13px; border-radius:10px; color:var(--muted); font-size:.84rem; } .side-menu nav a:hover { color:var(--text); background:rgba(195,216,178,.09); }
+    .menu-backdrop { position:fixed; z-index:50; inset:0; background:rgba(0,0,0,.36); opacity:0; pointer-events:none; transition:.2s; } .menu-backdrop.open { opacity:1; pointer-events:auto; }
+    .theme-toggle { position:fixed; z-index:60; top:22px; right:22px; width:42px; height:42px; border:1px solid var(--line); border-radius:12px; color:var(--text); background:rgba(16,17,15,.78); backdrop-filter:blur(14px); }
+    [data-theme="light"] { --bg:#f2f1eb; --surface:#fffefa; --surface-2:#e5e6dd; --text:#20231e; --muted:#6b7064; --line:rgba(32,35,30,.16); --cyan:#7c9b68; --violet:#887d59; --lime:#64834d; --shadow:0 28px 70px rgba(56,59,47,.16); }
+    [data-theme="light"] body:before { background:radial-gradient(circle at 12% 0%,rgba(124,155,104,.18),transparent 34rem),#f2f1eb; } [data-theme="light"] .menu-toggle,[data-theme="light"] .theme-toggle { background:rgba(255,254,250,.82); } [data-theme="light"] .side-menu { background:rgba(248,248,241,.96); }
     .status-row { padding:15px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); } .status-row strong { display:block; font-size:.88rem; } .status-row small { color:var(--muted); font-size:.73rem; }
     .switch { width:45px; height:25px; position:relative; border:0; border-radius:999px; background:linear-gradient(90deg,var(--violet),var(--cyan)); box-shadow:0 0 16px rgba(104,227,255,.28); } .switch:after { content:""; position:absolute; top:4px; right:4px; width:17px; height:17px; border-radius:50%; background:white; }
     .command { padding-top:16px; position:relative; z-index:1; } kbd { padding:5px 8px; border:1px solid var(--line); border-radius:7px; color:#d8f8ff; background:#080d19; font:500 .78rem 'Roboto Mono',monospace; }
     section { scroll-margin-top:24px; } .section { padding:88px 0; border-top:1px solid var(--line); } .section-title { max-width:690px; margin-bottom:40px; } .section-title h2 { margin-bottom:10px; font-size:clamp(1.8rem,3.3vw,3rem); letter-spacing:-.055em; } .section-title p { margin:0; color:var(--muted); }
     .feature-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; } .feature { padding:22px; border:1px solid var(--line); border-radius:17px; background:rgba(13,18,32,.68); } .feature-icon { display:grid; place-items:center; width:39px; height:39px; margin-bottom:20px; border-radius:11px; color:var(--cyan); background:rgba(104,227,255,.1); font-family:'Roboto Mono',monospace; } .feature h3 { margin-bottom:8px; font-size:.96rem; } .feature p { margin:0; color:var(--muted); font-size:.83rem; }
+    .facts-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; } .fact-card { position:relative; padding:20px 22px 20px 31px; border:1px solid var(--line); border-radius:16px; background:rgba(32,36,30,.72); } .fact-card:before { content:""; position:absolute; top:18px; bottom:18px; left:12px; width:4px; border-radius:20px; background:var(--fact-color); } .fact-card.green { --fact-color:#9cca87; } .fact-card.yellow { --fact-color:#e1c978; } .fact-card.red { --fact-color:#df897b; } .fact-label { display:inline-flex; align-items:center; gap:7px; margin-bottom:8px; color:var(--fact-color); font:600 .67rem 'Roboto Mono',monospace; letter-spacing:.06em; text-transform:uppercase; } .fact-label i { width:7px; height:7px; border-radius:50%; background:var(--fact-color); } .fact-card h3 { margin-bottom:5px; font-size:.9rem; } .fact-card p { margin:0; color:var(--muted); font-size:.79rem; }
     .wiring { display:grid; grid-template-columns:.92fr 1.08fr; gap:30px; align-items:start; } .board { position:relative; min-height:345px; padding:32px; overflow:hidden; border:1px solid rgba(104,227,255,.25); border-radius:21px; background:linear-gradient(135deg,#11233a,#0b1324); } .board:before,.board:after { content:""; position:absolute; border:1px solid rgba(104,227,255,.21); border-radius:50%; } .board:before { width:310px;height:310px;left:-105px;bottom:-190px; } .board:after { width:220px;height:220px;right:-125px;top:-135px; }
     .board-name { position:relative; z-index:1; font:600 1.1rem 'Roboto Mono',monospace; } .board-model { position:relative; z-index:1; margin:4px 0 45px; color:#90a5c4; font:.72rem 'Roboto Mono',monospace; } .chip { position:relative; z-index:1; width:170px; margin:auto; padding:23px 12px; border:2px solid rgba(104,227,255,.6); border-radius:9px; text-align:center; color:var(--cyan); background:#0b1627; box-shadow:0 0 0 7px rgba(104,227,255,.06),0 0 32px rgba(104,227,255,.14); font:600 .78rem 'Roboto Mono',monospace; } .pin-note { position:absolute; right:24px; bottom:22px; color:#9bb5d8; font:.68rem 'Roboto Mono',monospace; }
-    .pin-table { width:100%; overflow:hidden; border:1px solid var(--line); border-radius:17px; border-spacing:0; background:rgba(13,18,32,.68); font-size:.84rem; } .pin-table th,.pin-table td { padding:13px 16px; text-align:left; border-bottom:1px solid var(--line); } .pin-table tr:last-child td { border:0; } .pin-table th { color:var(--muted); font:500 .7rem 'Roboto Mono',monospace; text-transform:uppercase; } .pin-table td:last-child { color:var(--cyan); font-family:'Roboto Mono',monospace; } .safety { margin-top:16px; padding:13px 15px; border-left:3px solid #ffd36a; border-radius:9px; color:#c8d0e3; background:rgba(255,211,106,.07); font-size:.8rem; }
+    .pin-table { width:100%; overflow:hidden; border:1px solid var(--line); border-radius:17px; border-spacing:0; background:rgba(32,36,30,.68); font-size:.84rem; } .pin-table th,.pin-table td { padding:13px 16px; text-align:left; border-bottom:1px solid var(--line); } .pin-table tr:last-child td { border:0; } .pin-table th { color:var(--muted); font:500 .7rem 'Roboto Mono',monospace; text-transform:uppercase; } .pin-table td:last-child { color:var(--cyan); font-family:'Roboto Mono',monospace; } .safety { margin-top:16px; padding:13px 15px; border-left:3px solid #d8bd66; border-radius:9px; color:var(--text); background:rgba(216,189,102,.08); font-size:.8rem; }
     .install { display:grid; grid-template-columns:1fr 1fr; gap:24px; } .steps { display:grid; gap:14px; } .step { display:grid; grid-template-columns:34px 1fr; gap:13px; align-items:start; } .num { display:grid; place-items:center; width:30px; height:30px; border-radius:9px; color:var(--cyan); background:rgba(104,227,255,.1); font:500 .75rem 'Roboto Mono',monospace; } .step strong { display:block; margin:2px 0 2px; font-size:.89rem; } .step span { color:var(--muted); font-size:.8rem; }
     .code { margin:0; padding:22px; overflow:auto; border:1px solid var(--line); border-radius:16px; background:#080c16; box-shadow:inset 0 1px 0 rgba(255,255,255,.03); color:#dfe9ff; font:400 .79rem/1.8 'Roboto Mono',monospace; } .code .comment { color:#7383a3; } .code .cmd { color:var(--cyan); } .code .arg { color:#b9a8ff; }
     .faq { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; } details { padding:16px 18px; border:1px solid var(--line); border-radius:13px; background:rgba(13,18,32,.68); } summary { cursor:pointer; font-size:.85rem; font-weight:700; } details p { margin:12px 0 0; color:var(--muted); font-size:.8rem; } footer { padding:30px 0 115px; color:#73809b; font-size:.75rem; text-align:center; }
@@ -60,18 +67,33 @@
     .chat-head { display:flex; align-items:center; justify-content:space-between; padding:15px 16px; border-bottom:1px solid var(--line); background:linear-gradient(120deg,rgba(104,227,255,.1),rgba(146,120,255,.09)); } .chat-head strong { display:block; font-size:.84rem; } .chat-head small { display:block; color:var(--lime); font:500 .66rem 'Roboto Mono',monospace; } .close { width:29px; height:29px; border:0; border-radius:8px; color:var(--muted); background:rgba(255,255,255,.06); font-size:18px; }
     .messages { height:330px; padding:16px; overflow-y:auto; display:flex; flex-direction:column; gap:11px; } .message { max-width:87%; padding:10px 12px; border-radius:12px; white-space:pre-wrap; overflow-wrap:anywhere; font-size:.78rem; line-height:1.55; } .assistant { align-self:flex-start; border:1px solid var(--line); border-bottom-left-radius:3px; background:#121a2c; color:#dce6f9; } .user { align-self:flex-end; border-bottom-right-radius:3px; background:linear-gradient(135deg,#6956cb,#4775bf); } .typing { color:var(--muted); font:italic .73rem 'Roboto Mono',monospace; }
     .chat-form { display:flex; gap:8px; padding:12px; border-top:1px solid var(--line); } .chat-form input { min-width:0; flex:1; padding:11px 12px; outline:0; border:1px solid var(--line); border-radius:10px; color:var(--text); background:#080d18; font-size:.78rem; } .chat-form input:focus { border-color:var(--cyan); } .send { width:39px; border:0; border-radius:10px; color:#061019; background:var(--cyan); font-weight:900; } .send:disabled { opacity:.55; cursor:wait; }
-    @media (max-width:780px) { .nav-links { display:none; } .hero { grid-template-columns:1fr; gap:25px; min-height:0; padding:48px 0 68px; } .hero-card { max-width:510px; width:100%; } .feature-grid,.wiring,.install,.faq { grid-template-columns:1fr; } .section { padding:65px 0; } }
+    @media (max-width:780px) { .nav-links { display:none; } .hero { min-height:610px; padding:48px 0 68px; } .feature-grid,.facts-grid,.wiring,.install,.faq { grid-template-columns:1fr; } .section { padding:65px 0; } .model-note { right:-2%; } }
     @media (max-width:450px) { .container { width:min(100% - 28px,1120px); } h1 { font-size:2.45rem; } .chat-launcher { right:14px; bottom:14px; } .chat { right:14px; bottom:14px; width:calc(100vw - 28px); } .pin-table th,.pin-table td { padding:11px 9px; } }
   </style>
 </head>
 <body>
+  <button class="menu-toggle" id="menuToggle" type="button" aria-label="Открыть меню" aria-expanded="false"><span></span><span></span><span></span></button>
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Переключить тему">◐</button>
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+  <aside class="side-menu" id="sideMenu" aria-label="Навигация сайта">
+    <span class="card-label">VOICE LIGHTS / INDEX</span>
+    <p>Документация проекта ESP32-S3</p>
+    <nav>
+      <a href="#top">Главная</a>
+      <a href="#about">Как это работает</a>
+      <a href="#facts">Факты и ограничения</a>
+      <a href="#wiring">Подключение INMP441</a>
+      <a href="#install">Сборка и прошивка</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </aside>
   <div class="container">
     <nav class="nav" aria-label="Основная навигация"><a class="brand" href="#top"><span class="brand-mark">VL</span>Voice Lights</a><div class="nav-links"><a href="#about">О проекте</a><a href="#wiring">Подключение</a><a href="#install">Установка</a><a href="#faq">FAQ</a></div></nav>
     <main id="top">
-      <section class="hero"><div><span class="eyebrow"><i class="pulse"></i>EMBEDDED VOICE / ESP32-S3</span><h1>Voice <span>Lights</span></h1><p class="lead">Офлайн-интерфейс для ESP32-S3, INMP441 и ESP-SR MultiNet7. Небольшая плата, локальная сеть, одна понятная команда.</p><div class="actions"><a class="button primary" href="#install">Документация <span>↓</span></a><a class="button secondary" href="#wiring">Подключение</a></div></div>
-        <aside class="hero-card" aria-label="Макет устройства"><div class="card-top"><span class="card-label">HARDWARE / YD-ESP32-23</span><span class="online">● READY</span></div><div class="device-scene" aria-hidden="true"><div class="board-3d"><span class="mic-3d"></span></div></div><div class="status-row"><div><strong>INMP441</strong><small>I²S · 16 kHz</small></div><div><strong>ESP-SR</strong><small>MultiNet7 · EN</small></div><span class="switch" aria-hidden="true"></span></div><div class="command"><span class="card-label">Команда</span><kbd>lights ×2</kbd></div></aside>
+      <section class="hero"><div class="hero-model" aria-hidden="true"><canvas id="model-canvas"></canvas><span class="model-note">ESP32-S3 / N16R8</span></div><div class="hero-copy"><span class="eyebrow"><i class="pulse"></i>EMBEDDED VOICE / ESP32-S3</span><h1>Voice <span>Lights</span></h1><p class="lead">Офлайн-интерфейс для ESP32-S3, INMP441 и ESP-SR MultiNet7. Локальное распознавание, ясная документация, открытый исходный код.</p><div class="actions"><a class="button primary" href="#install">Документация <span>↓</span></a><a class="button secondary" href="#wiring">Подключение</a></div></div>
       </section>
       <section class="section" id="about"><div class="section-title"><h2>Проект в трёх слоях</h2><p>Аудиосигнал проходит короткий локальный путь: микрофон → ESP-SR MultiNet7 → GPIO-реле.</p></div><div class="feature-grid"><article class="feature"><div class="feature-icon">01</div><h3>Локальное распознавание</h3><p>После записи прошивки обработка голоса не требует облачного сервиса или внешнего соединения.</p></article><article class="feature"><div class="feature-icon">02</div><h3>Двойное подтверждение</h3><p><code>lights</code> должна быть распознана дважды в окне до двух секунд перед переключением реле.</p></article><article class="feature"><div class="feature-icon">03</div><h3>Локальная панель</h3><p>Устройство запускает AP+STA, доступно по IP или <code>voice-lights.local</code> и имеет встроенную web-панель.</p></article></div></section>
+      <section class="section" id="facts"><div class="section-title"><h2>Факты перед сборкой</h2><p>Короткие технические заметки с приоритетом, чтобы важное не потерялось в документации.</p></div><div class="facts-grid"><article class="fact-card green"><span class="fact-label"><i></i>Важно</span><h3>Распознавание происходит на плате</h3><p>После прошивки голосовая команда обрабатывается локально ESP-SR. Для самой команды интернет не нужен.</p></article><article class="fact-card yellow"><span class="fact-label"><i></i>Проверьте</span><h3>Нужен левый I²S-канал</h3><p>Подключите L/R микрофона к GND. Для текущей конфигурации используются BCLK GPIO4, WS GPIO5 и SD GPIO6.</p></article><article class="fact-card red"><span class="fact-label"><i></i>Безопасность</span><h3>Не подключайте сеть к GPIO</h3><p>GPIO21 управляет только входом изолированного модуля реле. Сетевое напряжение требует отдельной защиты и квалифицированного монтажа.</p></article><article class="fact-card green"><span class="fact-label"><i></i>Фактически</span><h3>Команда подтверждается дважды</h3><p>Слово <code>lights</code> должно быть распознано два раза в течение двух секунд, иначе реле не переключится.</p></article><article class="fact-card yellow"><span class="fact-label"><i></i>Среда</span><h3>Целевая плата — N16R8</h3><p>Проект рассчитан на YD-ESP32-23 / ESP32-S3 с 16 MB flash и 8 MB octal PSRAM.</p></article><article class="fact-card green"><span class="fact-label"><i></i>Сеть</span><h3>Есть два режима доступа</h3><p>Устройство работает как AP+STA, публикует mDNS-имя <code>voice-lights.local</code> и сохраняет резервную точку настройки.</p></article></div></section>
       <section class="section" id="wiring"><div class="section-title"><h2>Подключение INMP441</h2><p>Пины ниже соответствуют текущему исходному коду. У микрофона левый канал выбран подключением L/R к GND.</p></div><div class="wiring"><div class="board"><div class="board-name">ESP32-S3</div><div class="board-model">YD-ESP32-23 · N16R8</div><div class="chip">ESP32-S3<br><small>INMP441 · ESP-SR</small></div><div class="pin-note">GPIO 4 · 5 · 6 · 21</div></div><div><table class="pin-table"><thead><tr><th>Устройство</th><th>Подключить к ESP32-S3</th></tr></thead><tbody><tr><td>INMP441 VDD</td><td>3.3 V</td></tr><tr><td>INMP441 GND</td><td>GND</td></tr><tr><td>INMP441 SCK / BCLK</td><td>GPIO 4</td></tr><tr><td>INMP441 WS / LRCLK</td><td>GPIO 5</td></tr><tr><td>INMP441 SD</td><td>GPIO 6</td></tr><tr><td>INMP441 L/R</td><td>GND (левый канал)</td></tr><tr><td>Вход реле</td><td>GPIO 21</td></tr></tbody></table><p class="safety">⚠ Не подключайте сетевое напряжение к ESP32 напрямую. Используйте исправный изолированный модуль реле и соблюдайте правила электробезопасности.</p></div></div></section>
       <section class="section" id="install"><div class="section-title"><h2>Сборка и прошивка</h2><p>Проект рассчитан на ESP-IDF 5.3.4. Во время первой сборки Component Manager загрузит ESP-SR и нужные модели.</p></div><div class="install"><div class="steps"><div class="step"><b class="num">1</b><div><strong>Установите ESP-IDF 5.3.4</strong><span>Активируйте окружение ESP-IDF перед запуском <code>idf.py</code>.</span></div></div><div class="step"><b class="num">2</b><div><strong>Настройте локальные параметры</strong><span>Перед сборкой задайте Wi-Fi и пароль точки доступа в <code>main/app_config.h</code>. Не коммитьте реальные секреты.</span></div></div><div class="step"><b class="num">3</b><div><strong>Соберите и прошейте</strong><span>Подключите ESP32-S3 по USB и выполните команды справа.</span></div></div></div><pre class="code"><span class="comment"># Клонируйте свой репозиторий</span><br>git clone https://github.com/<span class="arg">YOUR-USERNAME</span>/voice-lights.git<br>cd voice-lights<br><br><span class="cmd">idf.py</span> set-target esp32s3<br><span class="cmd">idf.py</span> build<br><span class="cmd">idf.py</span> flash monitor</pre></div></section>
       <section class="section" id="faq"><div class="section-title"><h2>Коротко о проекте</h2></div><div class="faq"><details><summary>Какие команды поддерживаются?</summary><p>В текущей прошивке зарегистрирована одна английская команда: <code>lights</code>. Произнесите её дважды подряд за две секунды, чтобы переключить реле.</p></details><details><summary>Есть ли wake word?</summary><p>Нет. WakeNet отключён: MultiNet непрерывно анализирует обработанные аудиокадры. Двойное подтверждение команды снижает риск случайного переключения.</p></details><details><summary>Где открыть панель устройства?</summary><p>После подключения к Wi-Fi используйте IP-адрес, выведенный в лог, или <code>http://voice-lights.local</code>. Резервная точка настройки доступна на <code>http://192.168.4.1</code>.</p></details><details><summary>Нужно ли менять пины?</summary><p>Нет, если подключение выполнено по таблице. Пины микрофона находятся в <code>main/app_config.h</code>; логика реле использует GPIO 21.</p></details></div></section>
@@ -79,7 +101,93 @@
   </div>
   <button class="chat-launcher" id="chatOpen" type="button" aria-label="Открыть помощника проекта"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3v-7a4 4 0 0 1-1-3V7a4 4 0 0 1 4-4h11a4 4 0 0 1 4 4z"/></svg>Спросить ассистента</button>
   <section class="chat" id="chat" aria-label="Чат с помощником" aria-hidden="true"><header class="chat-head"><div><strong>Voice Lights Assistant</strong><small>● ПОМОЩНИК ПРОЕКТА</small></div><button class="close" id="chatClose" type="button" aria-label="Закрыть чат">×</button></header><div class="messages" id="messages" aria-live="polite"><div class="message assistant">Здравствуйте! Я помогу с подключением INMP441, ESP-IDF, ESP-SR и текущей прошивкой Voice Lights.</div></div><form class="chat-form" id="chatForm"><input id="chatInput" type="text" maxlength="1500" autocomplete="off" placeholder="Введите вопрос…" aria-label="Ваш вопрос"><button class="send" id="send" type="submit" aria-label="Отправить">↑</button></form></section>
+  <script type="importmap">
+    {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}
+  </script>
+  <script type="module">
+    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+    import { MTLLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/MTLLoader.js';
+    import { OBJLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/OBJLoader.js';
+
+    const canvas = document.getElementById('model-canvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(27, 1, 0.01, 100);
+    camera.position.set(0, 0.35, 6.2);
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+    scene.add(new THREE.HemisphereLight(0xe9f3df, 0x171b15, 2.4));
+    const key = new THREE.DirectionalLight(0xfff5df, 3.3); key.position.set(3, 4, 5); scene.add(key);
+    const rim = new THREE.DirectionalLight(0xb7d5ff, 1.3); rim.position.set(-4, 1, -3); scene.add(rim);
+    const modelRoot = new THREE.Group(); scene.add(modelRoot);
+    let modelReady = false;
+    new MTLLoader().setPath('./').load('ESP32-S3-DEVKITC-1-N16R8V.mtl', materials => {
+      materials.preload();
+      new OBJLoader().setMaterials(materials).setPath('./').load('ESP32-S3-DEVKITC-1-N16R8V.obj', object => {
+        object.traverse(child => {
+          if (!child.isMesh) return;
+          child.castShadow = true;
+          child.receiveShadow = true;
+          if (child.geometry) child.geometry.computeVertexNormals();
+        });
+        const bounds = new THREE.Box3().setFromObject(object);
+        const size = bounds.getSize(new THREE.Vector3());
+        const center = bounds.getCenter(new THREE.Vector3());
+        const scale = 3.35 / Math.max(size.x, size.y, size.z);
+        object.scale.setScalar(scale);
+        object.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+        object.rotation.set(-0.28, 0.52, 0.08);
+        modelRoot.add(object);
+        modelReady = true;
+      }, undefined, () => { canvas.setAttribute('aria-label', '3D-модель ESP32 недоступна'); });
+    });
+    let targetY = 0.52, targetX = -0.28;
+    function resizeModel() {
+      const rect = canvas.getBoundingClientRect();
+      const width = Math.max(1, rect.width), height = Math.max(1, rect.height);
+      renderer.setSize(width, height, false);
+      camera.aspect = width / height; camera.updateProjectionMatrix();
+    }
+    function animateModel() {
+      requestAnimationFrame(animateModel);
+      if (modelReady) {
+        targetY = 0.52 + window.scrollY * 0.0012;
+        targetX = -0.28 + Math.min(window.scrollY / Math.max(window.innerHeight, 1), 2) * 0.08;
+        modelRoot.rotation.y += (targetY - modelRoot.rotation.y) * 0.055;
+        modelRoot.rotation.x += (targetX - modelRoot.rotation.x) * 0.055;
+        modelRoot.position.y = Math.sin(performance.now() * 0.00045) * 0.035;
+      }
+      renderer.render(scene, camera);
+    }
+    window.addEventListener('resize', resizeModel, { passive:true });
+    resizeModel(); animateModel();
+  </script>
   <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const sideMenu = document.getElementById('sideMenu');
+    const menuBackdrop = document.getElementById('menuBackdrop');
+    const setMenu = (open) => {
+      menuToggle.classList.toggle('open', open);
+      sideMenu.classList.toggle('open', open);
+      menuBackdrop.classList.toggle('open', open);
+      menuToggle.setAttribute('aria-expanded', String(open));
+    };
+    menuToggle.addEventListener('click', () => setMenu(!sideMenu.classList.contains('open')));
+    menuBackdrop.addEventListener('click', () => setMenu(false));
+    sideMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('voice-lights-theme');
+    if (savedTheme === 'light') document.documentElement.dataset.theme = 'light';
+    themeToggle.addEventListener('click', () => {
+      const light = document.documentElement.dataset.theme !== 'light';
+      document.documentElement.dataset.theme = light ? 'light' : 'dark';
+      localStorage.setItem('voice-lights-theme', light ? 'light' : 'dark');
+      themeToggle.textContent = light ? '☼' : '◐';
+    });
+    themeToggle.textContent = document.documentElement.dataset.theme === 'light' ? '☼' : '◐';
+
     /*
       Gemini подключается ТОЛЬКО через серверный proxy: статический GitHub Pages
       не умеет хранить секреты. Не добавляйте GOOGLE_AI_API_KEY в этот файл.
@@ -117,7 +225,7 @@
           ? 'Чат ещё не настроен: укажите полный URL Worker в CHAT_PROXY_URL. API-ключ нельзя помещать в GitHub Pages.'
           : error.message.startsWith('worker-http-')
             ? `Worker вернул ошибку: ${error.message.replace('worker-http-', 'HTTP ')}`
-            : 'Браузер не смог подключиться к Worker. Проверьте CORS, URL и журнал Worker.';
+            : `Браузер не прочитал ответ Worker (${error.message || 'network error'}). Добавьте CORS-заголовок Access-Control-Allow-Origin ко всем POST-ответам Worker, а не только к OPTIONS.`;
       } finally { input.disabled = send.disabled = false; input.focus(); }
     });
   </script>

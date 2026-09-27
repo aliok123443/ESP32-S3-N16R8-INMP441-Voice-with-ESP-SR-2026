@@ -1,130 +1,111 @@
-# Voice Lights in 2026 / Голосовое управление светом в 2026
+# Voice Lights — сайт проекта
 
-Please read till the end.
-Пожалуйста прочитайте до конца.
-Tested on real ESP32-S3 N16R8 hardware — September 2026.
-Протестировано на реальном ESP32-S3 N16R8 — Сентябрь 2026.
-                               - 01.09.2026 (DD.MM.YYYY).
+Статическая страница для GitHub Pages проекта **Voice Lights**: офлайн-голосовое управление реле на YD-ESP32-23 / ESP32-S3 N16R8 с микрофоном INMP441 и ESP-SR.
 
-[Русский](#русский) · [English](#english)
+Страница сформирована по фактическому исходному коду прошивки из `../github-release` (эта папка не менялась).
 
-Offline voice-controlled relay firmware for **YD-ESP32-23 (ESP32-S3 N16R8)**. It uses an INMP441 I2S microphone, ESP-SR MultiNet7 command recognition, and a small web dashboard. No cloud service is required after flashing.
+## Что реализовано в прошивке
 
-> Status: this version continuously listens for the `lights` command and toggles a relay on GPIO21. Wake-word recognition and direct WS2812 control are not enabled in the current firmware.
+- ESP-IDF **5.3.4** и `espressif/esp-sr` **2.4.6**.
+- INMP441: SCK = GPIO4, WS = GPIO5, SD = GPIO6, L/R = GND (левый канал).
+- Реле: GPIO21, active-high по умолчанию.
+- Непрерывное английское распознавание ESP-SR MultiNet5 без wake word.
+- Одна команда: `lights`. Для переключения реле она должна быть распознана дважды в течение 2 секунд.
+- Wi-Fi AP+STA, локальное имя `voice-lights.local`, встроенная панель устройства и резервная точка настройки на `192.168.4.1`.
 
-## Русский
+## Публикация на GitHub Pages
 
-### Возможности
+1. Создайте на GitHub репозиторий или откройте репозиторий, где лежит этот файл.
+2. Поместите `index.html` в корень ветки, которую будете публиковать.
+3. Откройте **Settings → Pages**.
+4. В **Build and deployment** выберите **Deploy from a branch**, затем ветку `main` и папку `/(root)`, после чего сохраните.
+5. Через несколько минут сайт будет доступен по адресу, который покажет GitHub Pages.
 
-- Офлайн-распознавание английской команды `lights` через ESP-SR MultiNet7.
-- Для срабатывания команда должна быть распознана дважды в течение 2 секунд — защита от случайного включения.
-- Реле по умолчанию подключается к GPIO21; уровень по умолчанию active-high.
-- Веб-панель: текущий IP устройства или `http://voice-lights.local`.
-- Точка доступа настройки доступна всегда: `http://192.168.4.1`.
+## Gemini: безопасное подключение
 
-### Оборудование и подключение
+`index.html` сознательно не содержит Gemini API key. Любой ключ и пароль, записанные в JavaScript GitHub Pages, видны каждому посетителю через DevTools или исходный код.
 
-| Устройство | ESP32-S3 |
-| --- | --- |
-| INMP441 VDD | 3.3 V |
-| INMP441 GND | GND |
-| INMP441 SCK | GPIO4 |
-| INMP441 WS | GPIO5 |
-| INMP441 SD | GPIO6 |
-| INMP441 L/R | GND (левый канал) |
-| Вход реле | GPIO21 |
+Для работы чата нужен serverless proxy (например, Cloudflare Worker):
 
-Не подключайте силовую часть сети к ESP32 напрямую. Используйте исправный изолированный модуль реле и соблюдайте требования электробезопасности.
+1. В секретах Worker сохраните ключ как `GEMINI_API_KEY` — именно это имя читает текущий код Worker `green-dream-ddee`. Существующий secret `GEMINI_API` нужно переименовать или удалить и создать заново с именем `GEMINI_API_KEY`.
+2. В Worker выполните запрос к Gemini `generateContent`, добавив системный промт из `index.html` на серверной стороне.
+3. Разрешите CORS только для домена вашего GitHub Pages.
+4. Допускается вернуть исходный JSON Gemini: текущий `index.html` сам извлекает текст из `candidates[0].content.parts`.
+5. В `index.html` замените `CHAT_PROXY_URL` на URL Worker.
 
-### Сборка и прошивка
+Не размещайте ключ в Git, `index.html`, GitHub Secrets, если он затем подставляется в статический HTML, или в публичных issue. Google также рекомендует не публиковать API-ключи в клиентском коде.
 
-1. Установите ESP-IDF **v5.3.4** и активируйте окружение согласно [официальной инструкции Espressif](https://docs.espressif.com/projects/esp-idf/en/v5.3.4/esp32s3/get-started/).
-2. Склонируйте репозиторий и настройте личные параметры:
+### Минимальный Cloudflare Worker
 
-   ```powershell
-   git clone https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR-2026.git
-   cd voice-lights
-   # Отредактируйте main/app_config.h: Wi-Fi и пароль точки доступа.
-   idf.py set-target esp32s3
-   idf.py build flash monitor
-   ```
+Для Worker `green-dream-ddee` используйте URL `https://green-dream-ddee.alioktun.workers.dev`. В **Settings → Variables and Secrets** создайте secret `GEMINI_API_KEY` со значением ключа Google AI Studio. Секрет не попадёт в Git или браузер.
 
-Первый запуск `idf.py build` скачает ESP-SR и другие компоненты через ESP Component Manager, а также соберёт модели в раздел `model`.
+В текущем описании Worker указана модель `gemini-2.0-flash`. Она больше не подходит для нового production-деплоя; в Quick Editor замените её на поддерживаемую модель, например `gemini-3.5-flash-lite`, как в примере ниже.
 
-### Настройка
+```js
+const ALLOWED_ORIGIN = 'https://YOUR-USERNAME.github.io';
+const SYSTEM_PROMPT = `Ты — технический ассистент открытого проекта Voice Lights.
+Контекст: YD-ESP32-23 / ESP32-S3 N16R8; INMP441: VDD=3.3V, GND=GND,
+SCK=GPIO4, WS=GPIO5, SD=GPIO6, L/R=GND; реле GPIO21, active-high.
+ESP-IDF 5.3.4, ESP-SR 2.4.6, английский MultiNet5. WakeNet отключён.
+Единственная команда — LIGHTS (фонемы LiTS); для переключения реле она
+распознаётся дважды за 2 секунды. Wi-Fi AP+STA, mDNS voice-lights.local.
+Отвечай по-русски, кратко, технически точно и только по этому проекту,
+ESP-IDF, ESP-SR, электронике и безопасной отладке. Не выдумывай команды.`;
 
-До сборки замените в `main/app_config.h` следующие шаблонные значения:
+const cors = {
+  'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Vary': 'Origin',
+};
+const reply = (body, status = 200) =>
+  new Response(JSON.stringify(body), {
+    status, headers: { ...cors, 'Content-Type': 'application/json; charset=utf-8' },
+  });
 
-- `APP_WIFI_SSID` и `APP_WIFI_PASSWORD` — данные вашей домашней сети;
-- `APP_SETUP_AP_PASSWORD` — уникальный пароль точки доступа;
-- `APP_MDNS_HOSTNAME` — желаемое локальное имя.
+export default {
+  async fetch(request, env) {
+    if (request.method === 'OPTIONS') return new Response(null, { headers: cors });
+    if (request.method !== 'POST' || new URL(request.url).pathname !== '/api/chat') {
+      return reply({ error: 'Not found' }, 404);
+    }
+    if (request.headers.get('Origin') !== ALLOWED_ORIGIN) {
+      return reply({ error: 'Forbidden origin' }, 403);
+    }
 
-Не публикуйте этот файл с реальными паролями. Перед коммитом верните плейсхолдеры или храните личную конфигурацию вне репозитория.
+    let payload;
+    try { payload = await request.json(); } catch { return reply({ error: 'Bad JSON' }, 400); }
+    const contents = Array.isArray(payload.contents) ? payload.contents.slice(-10) : [];
+    const validContents = contents
+      .filter(item => item && (item.role === 'user' || item.role === 'model') && Array.isArray(item.parts))
+      .map(item => ({
+        role: item.role,
+        parts: item.parts
+          .filter(part => typeof part?.text === 'string')
+          .map(part => ({ text: part.text.slice(0, 1500) })),
+      }))
+      .filter(item => item.parts.length);
+    if (!validContents.length || validContents.at(-1).role !== 'user') {
+      return reply({ error: 'Invalid conversation' }, 400);
+    }
 
-Этот проект от 24.07.2026 (DD.MM.YYYY) , и он всё ещё работает.
-⚠️ ЕСЛИ У ВАС ОН НЕ РАБОТАЕТ, ПОЖАЛУЙСТА, СКАЧАЙТЕ **ESP-IDF v5.3.4** тесты проведены, и с **ESP-IDF v6.x.x** проект НЕ работает. А если вы уже используете **ESP-IDF v5.3.4**, пожалуйста, сообщите о проблеме здесь: [https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR/issues](https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR/issues) ⚠️
+    const gemini = await fetch(
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+          contents: validContents,
+          generationConfig: { maxOutputTokens: 500, temperature: 0.2 },
+        }),
+      },
+    );
+    const data = await gemini.json();
+    if (!gemini.ok) return reply({ error: 'Gemini request failed' }, 502);
+    return reply(data);
+  },
+};
+```
 
-## English
-
-### Features
-
-- Offline recognition of the English `lights` command using ESP-SR MultiNet7.
-- A command must be recognized twice within two seconds, reducing accidental switching.
-- Relay output defaults to GPIO21 and active-high logic.
-- Web dashboard at the device IP address or `http://voice-lights.local`.
-- A fallback setup access point is always available at `http://192.168.4.1`.
-
-### Hardware wiring
-
-| Device | ESP32-S3 |
-| --- | --- |
-| INMP441 VDD | 3.3 V |
-| INMP441 GND | GND |
-| INMP441 SCK | GPIO4 |
-| INMP441 WS | GPIO5 |
-| INMP441 SD | GPIO6 |
-| INMP441 L/R | GND (left channel) |
-| Relay input | GPIO21 |
-
-Never connect mains power directly to an ESP32. Use a suitably rated isolated relay module and follow local electrical-safety rules.
-
-### Build and flash
-
-1. Install and export **ESP-IDF v5.3.4** using Espressif’s [official getting-started guide](https://docs.espressif.com/projects/esp-idf/en/v5.3.4/esp32s3/get-started/).
-2. Clone the repository, configure it, then build:
-
-   ```powershell
-   git clone https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR-2026.git
-   cd voice-lights
-   # Edit main/app_config.h with your Wi-Fi settings and AP password.
-   idf.py set-target esp32s3
-   idf.py build flash monitor
-   ```
-
-The first build downloads ESP-SR and the remaining dependencies through ESP Component Manager, then packages the selected models into the `model` partition.
-
-### Configuration and security
-
-Replace the placeholders in `main/app_config.h` before building. Do not publish real Wi-Fi credentials or a real access-point password. Revert the file to its placeholders before committing, or keep your personal configuration outside the repository.
-
-## Project layout
-
-| Path | Purpose |
-| --- | --- |
-| `main/main.c` | Firmware source |
-| `main/app_config.h` | Board pins and local network configuration |
-| `main/web/index.html` | Embedded web dashboard |
-| `sdkconfig.defaults` | ESP-IDF and ESP-SR defaults |
-| `partitions.csv` | 16 MB flash partition table, including ESP-SR models |
-
-## Contributing
-
-Issues and pull requests are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md), keep pull requests focused, and do not include build directories, generated files, or credentials.
-
-## License and third-party software
-
-This repository’s original source is licensed under [MIT](LICENSE). ESP-IDF, ESP-SR, and Component Manager dependencies remain subject to their own licenses; they are downloaded separately during the build.
-
-This project from 24.07.2026 (DD.MM.YYYY) and it still works.
-
-⚠️ IF IT'S NOT WORKING PLEASE DOWNLOAD **ESP-IDF v5.3.4** TESTS SHOWED THAT WITH **ESP-IDF v6.x.x** IT DOESN'T WORK. AND IF YOU ALREADY ON **ESP-IDF v5.3.4** PLEASE REPORT AN ISSUE [https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR/issues] (https://github.com/aliok123443/ESP32-S3-N16R8-INMP441-Voice-with-ESP-SR/issues) ⚠️
+После публикации Worker скопируйте его адрес в переменную `CHAT_PROXY_URL` в `index.html`. Для собственного домена укажите в `ALLOWED_ORIGIN` именно этот домен. Перед публичным запуском добавьте rate limiting / Turnstile: иначе любой посетитель сайта сможет расходовать вашу квоту Gemini.

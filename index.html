@@ -97,13 +97,19 @@
         if (CHAT_PROXY_URL.includes('YOUR-WORKER')) throw new Error('proxy-not-configured');
         const contents = conversation.slice(-10).map(item => ({ role:item.role, parts:[{ text:item.text }] }));
         const response = await fetch(CHAT_PROXY_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ system_instruction:{ parts:[{ text:SYSTEM_PROMPT }] }, contents, generationConfig:{ maxOutputTokens:500, temperature:0.2 } }) });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data = await response.json();
+        const raw = await response.text();
+        let data = {}; try { data = raw ? JSON.parse(raw) : {}; } catch { data = { raw }; }
+        if (!response.ok) throw new Error(`worker-http-${response.status}: ${data.error?.message || data.error || raw.slice(0,180)}`);
         const answer = data.candidates?.[0]?.content?.parts?.map(part => part.text || '').join('').trim();
         if (!answer) throw new Error('invalid-response');
         pending.classList.remove('typing'); pending.textContent = answer; conversation.push({ role:'model', text:answer });
       } catch (error) {
-        pending.classList.remove('typing'); pending.textContent = error.message === 'proxy-not-configured' ? 'Чат ещё не настроен: укажите полный URL Worker в CHAT_PROXY_URL. API-ключ нельзя помещать в GitHub Pages.' : 'Не удалось получить ответ. Проверьте URL Worker, CORS и журнал Worker.';
+        pending.classList.remove('typing');
+        pending.textContent = error.message === 'proxy-not-configured'
+          ? 'Чат ещё не настроен: укажите полный URL Worker в CHAT_PROXY_URL. API-ключ нельзя помещать в GitHub Pages.'
+          : error.message.startsWith('worker-http-')
+            ? `Worker вернул ошибку: ${error.message.replace('worker-http-', 'HTTP ')}`
+            : 'Браузер не смог подключиться к Worker. Проверьте CORS, URL и журнал Worker.';
       } finally { input.disabled = send.disabled = false; input.focus(); }
     });
   </script>
